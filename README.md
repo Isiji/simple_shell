@@ -1,1 +1,1 @@
-this is my second partnership. wea are creating a custom simple shell
+this is our second partnership. we are creating a custom simple shell

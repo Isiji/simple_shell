@@ -48,7 +48,7 @@ int the_atoi(char *s)
 	int n, sign = 1, flag = 0, output;
 	unsigned int result = 0;
 
-	for (n = 0; s[n] != '\0' && flag != 2; i++)
+	for (n = 0; s[n] != '\0' && flag != 2; n++)
 	{
 		if (s[n] == '-')
 			sign *= -1;

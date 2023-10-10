@@ -144,9 +144,9 @@ void _puts(char *);
 int _putchar(char);
 
 /* toem_exits.c */
-char *_strncpy(char *, char *, int);
-char *_strncat(char *, char *, int);
-char *_strchr(char *, char);
+char *the_strncat(char *dest, char *src, int t);
+char *the_strchr(char *str, char c);
+char *the_strncpy(char *dest, char *src, int t);
 
 /* toem_tokenizer.c */
 char **strtow(char *, char *);
@@ -183,14 +183,15 @@ int the_history(data_t *data);
 int unset_alias(data_t *data, char *str);
 
 /*toem_getline.c */
-ssize_t get_input(info_t *);
-int _getline(info_t *, char **, size_t *);
-void sigintHandler(int);
+ssize_t entry_buf(data_t *data, char **buf, size_t *len);
+ssize_t the_input(data_t *data);
+int the_getline(data_t *data, char **ptr, size_t *length);
+void sigint(__attribute__((unused))int sig_count);
 
 /* toem_getinfo.c */
-void clear_info(info_t *);
-void set_info(info_t *, char **);
-void free_info(info_t *, int);
+void clear_data(data_t *data);
+void set_data(data_t *data, char **av);
+void free_data(data_t *data, int all);
 
 /* toem_environ.c */
 char *the_getenv(data_t *data, const char *name);
@@ -200,16 +201,16 @@ int the_unsetenv(data_t *data);
 int pop_envlist(data_t *data);
 
 /* toem_getenv.c */
-char **get_environ(info_t *);
-int _unsetenv(info_t *, char *);
-int _setenv(info_t *, char *, char *);
+char **get_env(data_t *data);
+int the_unsetenv(data_t *data, char *var);
+int the_setenv(data_t *data, char *var, char *value);
 
 /* toem_history.c */
-char *get_history_file(info_t *info);
-int write_history(info_t *info);
-int read_history(info_t *info);
-int build_history_list(info_t *info, char *buf, int linecount);
-int renumber_history(info_t *info);
+char *the_history(data_t *data);
+int write_history(data_t *data);
+int read_history(data_t *data);
+int build_history(data_t *data, char *buf, int linecount);
+int renumber_history(data_t *data);
 
 /* toem_lists.c */
 list_t *add_node(list_t **, const char *, int);

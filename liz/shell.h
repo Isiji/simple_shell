@@ -178,9 +178,9 @@ int the_exit(data_t *data);
 int the_cd(data_t *data);
 int the_help(data_t *data);
 
-/* toem_builtin1.c */
-int _myhistory(info_t *);
-int _myalias(info_t *);
+/* toem_builtin2.c */
+int the_history(data_t *data);
+int unset_alias(data_t *data, char *str);
 
 /*toem_getline.c */
 ssize_t get_input(info_t *);

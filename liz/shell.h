@@ -213,11 +213,11 @@ int build_history(data_t *data, char *buf, int linecount);
 int renumber_history(data_t *data);
 
 /* toem_lists.c */
-list_t *add_node(list_t **, const char *, int);
-list_t *add_node_end(list_t **, const char *, int);
-size_t print_list_str(const list_t *);
-int delete_node_at_index(list_t **, unsigned int);
-void free_list(list_t **);
+list_t *the_node(list_t **head, const char *s, int num);
+list_t *the_node_end(list_t **head, const char *s, int num);
+size_t the_list_str(const list_t *head);
+int delete_node(list_t **h, unsigned int index);
+void free_node(list_t **head_p);
 
 /* toem_lists1.c */
 size_t list_len(const list_t *);

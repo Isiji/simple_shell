@@ -1,62 +1,62 @@
-#include "shell.h"
+#includechar *the_memset(char *p, char b, unsigned int num) "shell.h"
 
 /**
- * _memset - fills memory with a constant byte
- * @s: the pointer to the memory area
+ * the_memset - fills memory with a constant byte
+ * @p: the pointer to the memory area
  * @b: the byte to fill *s with
- * @n: the amount of bytes to be filled
+ * @num: the amount of bytes to be filled
  * Return: (s) a pointer to the memory area s
  */
-char *_memset(char *s, char b, unsigned int n)
+char *the_memset(char *p, char b, unsigned int num)
 {
 	unsigned int i;
 
-	for (i = 0; i < n; i++)
-		s[i] = b;
-	return (s);
+	for (i = 0; i < num; i++)
+		p[i] = b;
+	return (p);
 }
 
 /**
- * ffree - frees a string of strings
- * @pp: string of strings
+ * free_str - frees a string of strings
+ * @sstr: string of strings
  */
-void ffree(char **pp)
+void free_str(char **sstr)
 {
-	char **a = pp;
+	char **p = sstr;
 
-	if (!pp)
+	if (!sstr)
 		return;
-	while (*pp)
-		free(*pp++);
-	free(a);
+	while (*sstr)
+		free(*sstr++);
+	free(p);
 }
 
 /**
- * _realloc - reallocates a block of memory
+ * the_realloc - reallocates a block of memory
  * @ptr: pointer to previous malloc'ated block
- * @old_size: byte size of previous block
+ * @prev_size: byte size of previous block
  * @new_size: byte size of new block
  *
  * Return: pointer to da ol'block nameen.
  */
-void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
+void *the_realloc(void *ptr, unsigned int prev_size, unsigned int new_size)
 {
-	char *p;
+	char *t;
 
 	if (!ptr)
 		return (malloc(new_size));
 	if (!new_size)
 		return (free(ptr), NULL);
-	if (new_size == old_size)
+	if (new_size == prev_size)
 		return (ptr);
 
-	p = malloc(new_size);
-	if (!p)
+	t = malloc(new_size);
+	if (!t)
 		return (NULL);
 
-	old_size = old_size < new_size ? old_size : new_size;
-	while (old_size--)
-		p[old_size] = ((char *)ptr)[old_size];
+	prev_size = prev_size < new_size ? prev_size : new_size;
+	while (prev_size--)
+		p[prev_size] = ((char *)ptr)[prev_size];
 	free(ptr);
-	return (p);
+	return (t);
 }

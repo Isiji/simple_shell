@@ -69,7 +69,7 @@ typedef struct liststr
  * @status: the return status of the last exec'd command
  * @cmd_buf: address of pointer to cmd_buf, on if chaining
  * @cmd_buf_type: CMD_type ||, &&, ;
- * @readfd: the fd from which to read line input
+ * @readdt: the dt from which to read line input
  * @histcount: the history line number count
  */
 typedef struct passinfo
@@ -91,11 +91,11 @@ typedef struct passinfo
 
 	char **cmd_buf; /* pointer to cmd ; chain buffer, for memory mangement */
 	int cmd_buf_type; /* CMD_type ||, &&, ; */
-	int readfd;
+	int readdt;
 	int histcount;
-} info_t;
+} data_t;
 
-#define INFO_INIT \
+#define DATA_INIT \
 {NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, \
 		0, 0, 0}
 
@@ -107,20 +107,20 @@ typedef struct passinfo
 typedef struct builtin
 {
 	char *type;
-	int (*func)(info_t *);
+	int (*func)(data_t *);
 } builtin_table;
 
 
 /* toem_shloop.c */
-int hsh(info_t *, char **);
-int find_builtin(info_t *);
-void find_cmd(info_t *);
-void fork_cmd(info_t *);
+int hsh(data_t *data, char **av);
+int find_builtin(data_t *data);
+void find_cmd(data_t *data);
+void fork_cmd(data_t *data);
 
 /* toem_parser.c */
-int is_cmd(info_t *, char *);
-char *dup_chars(char *, int, int);
-char *find_path(info_t *, char *, char *);
+int the_cmd(data_t *data, char *path);
+char *dup_chars(char *path_sr, int start, int stop);
+char *find_path(data_t *data, char *path_s, char *cmd);
 
 /* loophsh.c */
 int loophsh(char **);
@@ -153,12 +153,12 @@ char **strtow(char *, char *);
 char **strtow2(char *, char);
 
 /* toem_realloc.c */
-char *_memset(char *, char, unsigned int);
-void ffree(char **);
-void *_realloc(void *, unsigned int, unsigned int);
+char *the_memset(char *p, char b, unsigned int num);
+void free_str(char **sstr);
+void *the_realloc(void *ptr, unsigned int prev_size, unsigned int new_size);
 
 /* toem_memory.c */
-int bfree(void **);
+int free_p(void **p);
 
 /* toem_atoi.c */
 int inter(data_t *data);
@@ -220,11 +220,11 @@ int delete_node(list_t **h, unsigned int index);
 void free_node(list_t **head_p);
 
 /* toem_lists1.c */
-size_t list_len(const list_t *);
-char **list_to_strings(list_t *);
-size_t print_list(const list_t *);
-list_t *node_starts_with(list_t *, char *, char);
-ssize_t get_node_index(list_t *, list_t *);
+size_t list_len(const list_t *h);
+char **list_str(list_t *h);
+size_t print_list(const list_t *h);
+list_t *node_pref(list_t *node, char *pre char n);
+ssize_t node_index(list_t *h, list_t *node);
 
 /* toem_vars.c */
 int is_chain(info_t *, char *, size_t *);

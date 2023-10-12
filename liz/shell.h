@@ -132,16 +132,16 @@ int the_putdt(char c, int dt);
 int the_putsdt(char *str, int dt);
 
 /* toem_string.c */
-int _strlen(char *);
-int _strcmp(char *, char *);
-char *starts_with(const char *, const char *);
-char *_strcat(char *, char *);
+int the_strlen(char *str);
+int the_strcmp(char *str1, char *str2);
+char *starts_with(const char *srch, const char *sub_srch);
+char *the_strcat(char *dest, char *src);
 
 /* toem_string1.c */
-char *_strcpy(char *, char *);
-char *_strdup(const char *);
-void _puts(char *);
-int _putchar(char);
+char *the_strcpy(char *dest, char *src);
+char *the_strdup(const char *str);
+void the_puts(char *str);
+int the_putchar(char c);
 
 /* toem_exits.c */
 char *the_strncat(char *dest, char *src, int t);
@@ -149,8 +149,8 @@ char *the_strchr(char *str, char c);
 char *the_strncpy(char *dest, char *src, int t);
 
 /* toem_tokenizer.c */
-char **strtow(char *, char *);
-char **strtow2(char *, char);
+char **str_wrd(char *str, char *d);
+char **str_wrd1(char *str, char d);
 
 /* toem_realloc.c */
 char *the_memset(char *p, char b, unsigned int num);

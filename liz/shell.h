@@ -93,9 +93,9 @@ typedef struct passinfo
 	int cmd_buf_type; /* CMD_type ||, &&, ; */
 	int readfd;
 	int histcount;
-} info_t;
+} data_t;
 
-#define INFO_INIT \
+#define DATA_INIT \
 {NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, \
 		0, 0, 0}
 
@@ -107,20 +107,20 @@ typedef struct passinfo
 typedef struct builtin
 {
 	char *type;
-	int (*func)(info_t *);
+	int (*func)(data_t *);
 } builtin_table;
 
 
 /* toem_shloop.c */
-int hsh(info_t *, char **);
-int find_builtin(info_t *);
-void find_cmd(info_t *);
-void fork_cmd(info_t *);
+int hsh(data_t *, char **);
+int find_builtin(data_t *);
+void find_cmd(data_t *);
+void fork_cmd(data_t *);
 
 /* toem_parser.c */
-int is_cmd(info_t *, char *);
+int is_cmd(data_t *, char *);
 char *dup_chars(char *, int, int);
-char *find_path(info_t *, char *, char *);
+char *find_path(data_t *, char *, char *);
 
 /* loophsh.c */
 int loophsh(char **);
@@ -168,7 +168,7 @@ int _atoi(char *);
 
 /* toem_errors1.c */
 int _erratoi(char *);
-void print_error(info_t *, char *);
+void print_error(data_t *, char *);
 int print_d(int, int);
 char *convert_number(long int, int, int);
 void remove_comments(char *);
@@ -202,15 +202,15 @@ int pop_envlist(data_t *data);
 
 /* toem_getenv.c */
 
-int _unsetenv(info_t *, char *);
-int _setenv(info_t *, char *, char *);
+int _unsetenv(data_t *, char *);
+int _setenv(data_t *, char *, char *);
 
 /* toem_history.c */
-char *get_history_file(info_t *info);
-int write_history(info_t *info);
-int read_history(info_t *info);
-int build_history_list(info_t *info, char *buf, int linecount);
-int renumber_history(info_t *info);
+char *get_history_file(data_t *data);
+int write_history(data_t *data);
+int read_history(data_t *data);
+int build_history_list(data_t *data, char *buf, int linecount);
+int renumber_history(data_t *data);
 
 /* toem_lists.c */
 list_t *add_node(list_t **, const char *, int);
@@ -227,10 +227,10 @@ list_t *node_starts_with(list_t *, char *, char);
 ssize_t get_node_index(list_t *, list_t *);
 
 /* toem_vars.c */
-int is_chain(info_t *, char *, size_t *);
-void check_chain(info_t *, char *, size_t *, size_t, size_t);
-int replace_alias(info_t *);
-int replace_vars(info_t *);
+int is_chain(data_t *, char *, size_t *);
+void check_chain(data_t *, char *, size_t *, size_t, size_t);
+int replace_alias(data_t *);
+int replace_vars(data_t *);
 int replace_string(char **, char *);
 
 #endif

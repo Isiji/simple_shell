@@ -26,7 +26,7 @@ char *the_getenv(data_t *data, const char *name)
 
 	while (node)
 	{
-		t = node_start(node->str, name);
+		t = our_node(node->str, name);
 		if (t && *t)
 			return (t);
 		node = node->next;

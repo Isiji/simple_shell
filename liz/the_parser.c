@@ -57,7 +57,7 @@ char *find_path(data_t *data, char *path_s, char *cmd)
 
 	if (!path_s)
 		return (NULL);
-	if ((the_strlen(cmd) > 2) && node_start(cmd, "./"))
+	if ((the_strlen(cmd) > 2) && our_node(cmd, "./"))
 	{
 		if (the_cmd(data, cmd))
 			return (cmd);

@@ -92,7 +92,7 @@ list_t *starts_with(list_t *node, char *pre char n)
 
 	while (node)
 	{
-		k = node_start(node->str, pref);
+		k = our_node(node->str, pref);
 		if (k && ((n == -1) || (*k == n)))
 			return (node);
 		node = node->next;

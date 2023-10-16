@@ -95,7 +95,7 @@ void find_cmd(data_t *data)
 		data->linecount_flag = 0;
 	}
 	for (i = 0, k = 0; data->arg[i]; i++)
-		if (!is_delim(data->arg[i], " \t\n"))
+		if (!the_delim(data->arg[i], " \t\n"))
 			k++;
 	if (!k)
 		return;

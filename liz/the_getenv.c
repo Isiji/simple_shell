@@ -35,7 +35,7 @@ int the_unsetenv(data_t *data, char *var)
 
 	while (node)
 	{
-		p = node_start(node->str, var);
+		p = our_node(node->str, var);
 		if (p && *p == '=')
 		{
 			data->env_changed = delete_node(&(data->env), i);
@@ -76,7 +76,7 @@ int the_setenv(data_t *data, char *var, char *value)
 	node = data->env;
 	while (node)
 	{
-		p = starts_with(node->str, var);
+		p = our_node(node->str, var);
 		if (p && *p == '=')
 		{
 			free(node->str);

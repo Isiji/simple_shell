@@ -30,8 +30,8 @@ int unset_alias(data_t *data, char *str)
 		return (1);
 	c = *p;
 	*p = 0;
-	rn = delete_node_at_index(&(data->alias),
-		get_node_index(data->alias, node_starts_with(data->alias, str, -1)));
+	rn = delete_node(&(data->alias),
+		node_index(data->alias, starts_with(data->alias, str, -1)));
 	*p = c;
 	return (rn);
 }
@@ -47,14 +47,14 @@ int set_alias(data_t *data, char *str)
 {
 	char *p;
 
-	p = _strchr(str, '=');
+	p = the_strchr(str, '=');
 	if (!p)
 		return (1);
 	if (!*++p)
 		return (unset_alias(data, str));
 
 	unset_alias(data, str);
-	return (add_node_end(&(data->alias), str, 0) == NULL);
+	return (the_node_end(&(data->alias), str, 0) == NULL);
 }
 
 /**
@@ -69,7 +69,7 @@ int print_alias(list_t *node)
 
 	if (node)
 	{
-		p = _strchr(node->str, '=');
+		p = the_strchr(node->str, '=');
 		for (a = node->str; a <= p; a++)
 		the_putchar(*a);
 		the_putchar('\'');
@@ -86,7 +86,7 @@ int print_alias(list_t *node)
  *          constant function prototype.
  *  Return: Always 0
  */
-iint the_alias(data_t *data)
+int the_alias(data_t *data)
 {
 	int j = 0;
 	char *t = NULL;
@@ -108,7 +108,7 @@ iint the_alias(data_t *data)
 		if (t)
 			set_alias(data, data->argv[j]);
 		else
-			print_alias(node_starts_with(data->alias, data->argv[j], '='));
+			print_alias(starts_with(data->alias, data->argv[j], '='));
 	}
 
 	return (0);

@@ -35,10 +35,10 @@ int the_unsetenv(data_t *data, char *var)
 
 	while (node)
 	{
-		p = starts_with(node->str, var);
+		p = node_start(node->str, var);
 		if (p && *p == '=')
 		{
-			data->env_changed = delete_node_at_index(&(data->env), i);
+			data->env_changed = delete_node(&(data->env), i);
 			i = 0;
 			node = data->env;
 			continue;
@@ -73,7 +73,7 @@ int the_setenv(data_t *data, char *var, char *value)
 	the_strcpy(buf, var);
 	the_strcat(buf, "=");
 	the_strcat(buf, value);
-	node = info->env;
+	node = data->env;
 	while (node)
 	{
 		p = starts_with(node->str, var);
@@ -86,7 +86,7 @@ int the_setenv(data_t *data, char *var, char *value)
 		}
 		node = node->next;
 	}
-	add_node_end(&(data->env), buf, 0);
+	the_node_end(&(data->env), buf, 0);
 	free(buf);
 	data->env_changed = 1;
 	return (0);

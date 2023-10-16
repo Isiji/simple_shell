@@ -15,10 +15,10 @@ int hsh(data_t *data, char **av)
 	while (j != -1 && builtin_ret != -2)
 	{
 		clear_data(data);
-		if (interactive(data))
+		if (inter(data))
 			the_puts("$ ");
 		the_eputchar(BUF_FLUSH);
-		j = get_input(data);
+		j = the_input(data);
 		if (j != -1)
 		{
 			set_data(data, av);
@@ -26,13 +26,13 @@ int hsh(data_t *data, char **av)
 			if (builtin_ret == -1)
 				find_cmd(data);
 		}
-		else if (interactive(data))
+		else if (inter(data))
 			the_putchar('\n');
 		free_data(data, 0);
 	}
 	write_history(data);
 	free_data(data, 1);
-	if (!interactive(data) && data->status)
+	if (!inter(data) && data->status)
 		exit(data->status);
 	if (builtin_ret == -2)
 	{
@@ -100,7 +100,7 @@ void find_cmd(data_t *data)
 	if (!k)
 		return;
 
-	path = find_path(data, _getenv(data, "PATH="), data->argv[0]);
+	path = find_path(data, the_getenv(data, "PATH="), data->argv[0]);
 	if (path)
 	{
 		data->path = path;
@@ -108,13 +108,13 @@ void find_cmd(data_t *data)
 	}
 	else
 	{
-		if ((interactive(data) || the_getenv(data, "PATH=")
-					|| data->argv[0][0] == '/') && is_cmd(data, data->argv[0]))
+		if ((inter(data) || the_getenv(data, "PATH=")
+					|| data->argv[0][0] == '/') && the_cmd(data, data->argv[0]))
 			fork_cmd(data);
 		else if (*(data->arg) != '\n')
 		{
 			data->status = 127;
-			print_error(data, "not found\n");
+			prt_err(data, "not found\n");
 		}
 	}
 }
@@ -138,7 +138,7 @@ void fork_cmd(data_t *data)
 	}
 	if (child_pid == 0)
 	{
-		if (execve(data->path, data->argv, get_environ(data)) == -1)
+		if (execve(data->path, data->argv, get_env(data)) == -1)
 		{
 			free_data(data, 1);
 			if (errno == EACCES)
@@ -152,9 +152,9 @@ void fork_cmd(data_t *data)
 		wait(&(data->status));
 		if (WIFEXITED(data->status))
 		{
-		datao->status = WEXITSTATUS(data->status);
+		data->status = WEXITSTATUS(data->status);
 			if (data->status == 126)
-				print_error(data, "Permission denied\n");
+				prt_err(data, "Permission denied\n");
 		}
 	}
 }

@@ -8,7 +8,7 @@
  *
  * Return: 1 if chain delimeter, 0 otherwise
  */
-int th_chain(data_t *data, char *buf, size_t *d)
+int the_chain(data_t *data, char *buf, size_t *d)
 {
 	size_t j = *d;
 
@@ -83,7 +83,7 @@ int rep_alias(data_t *data)
 
 	for (i = 0; i < 10; i++)
 	{
-		node = node_starts_with(data->alias, data->argv[0], '=');
+		node = starts_with(data->alias, data->argv[0], '=');
 		if (!node)
 			return (0);
 		free(data->argv[0]);
@@ -114,19 +114,19 @@ int replace_vars(data_t *data)
 		if (data->argv[i][0] != '$' || !data->argv[i][1])
 			continue;
 
-		if (!_strcmp(data->argv[i], "$?"))
+		if (!the_strcmp(data->argv[i], "$?"))
 		{
 			replace_string(&(data->argv[i]),
-					the_strdup(convert_number(data->status, 10, 0)));
+					the_strdup(convert_num(data->status, 10, 0)));
 			continue;
 		}
 		if (!the_strcmp(data->argv[i], "$$"))
 		{
 			replace_string(&(data->argv[i]),
-					the_strdup(convert_number(getpid(), 10, 0)));
+					the_strdup(convert_num(getpid(), 10, 0)));
 			continue;
 		}
-		node = node_starts_with(data->env, &data->argv[i][1], '=');
+		node = starts_with(data->env, &data->argv[i][1], '=');
 		if (node)
 		{
 			replace_string(&(data->argv[i]),

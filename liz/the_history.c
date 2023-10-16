@@ -1,13 +1,13 @@
 #include "shell.h"
 
 /**
- * the_history - gets the history file
+ * the_hist - gets the history file
  * @data: parameter struct
  *
  * Return: allocated string containg history file
  */
 
-char *the_history(data_t *data)
+char *the_hist(data_t *data)
 {
 	char *buf, *dir;
 
@@ -33,7 +33,7 @@ char *the_history(data_t *data)
 int write_history(data_t *data)
 {
 	ssize_t dt;
-	char *filename = the_history(data);
+	char *filename = the_hist(data);
 	list_t *node = NULL;
 
 	if (!filename)
@@ -64,7 +64,7 @@ int read_history(data_t *data)
 	int i, last = 0, linecount = 0;
 	ssize_t dt, rdlen, fsize = 0;
 	struct stat st;
-	char *buf = NULL, *filename = the_history(data);
+	char *buf = NULL, *filename = the_hist(data);
 
 	if (!filename)
 		return (0);
@@ -89,15 +89,15 @@ int read_history(data_t *data)
 		if (buf[i] == '\n')
 		{
 			buf[i] = 0;
-			build_history_list(info, buf + last, linecount++);
+			build_history(data, buf + last, linecount++);
 			last = i + 1;
 		}
 	if (last != i)
-		build_history_list(data, buf + last, linecount++);
+		build_history(data, buf + last, linecount++);
 	free(buf);
 	data->histcount = linecount;
 	while (data->histcount-- >= HIST_MAX)
-		delete_node_at_index(&(data->history), 0);
+		delete_node(&(data->history), 0);
 	renumber_history(data);
 	return (data->histcount);
 }
@@ -116,7 +116,7 @@ int build_history(data_t *data, char *buf, int linecount)
 
 	if (data->history)
 		node = data->history;
-	add_node_end(&node, buf, linecount);
+	the_node_end(&node, buf, linecount);
 
 	if (!data->history)
 		data->history = node;

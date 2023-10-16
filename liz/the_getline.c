@@ -15,10 +15,10 @@ ssize_t entry_buf(data_t *data, char **buf, size_t *len)
 
 	if (!*len) /* if nothing left in the buffer, fill it */
 	{
-		/*bfree((void **)info->cmd_buf);*/
+		/*free_p((void **)info->cmd_buf);*/
 		free(*buf);
 		*buf = NULL;
-		signal(SIGINT, sigintHandler);
+		signal(SIGINT, sigint);
 #if USE_GETLINE
 		j = getline(buf, &len_k, stdin);
 #else
@@ -33,8 +33,8 @@ ssize_t entry_buf(data_t *data, char **buf, size_t *len)
 			}
 			data->linecount_flag = 1;
 			rem_comments(*buf);
-			build_history_list(data, *buf, data->histcount++);
-			/* if (_strchr(*buf, ';')) is this a command chain? */
+			build_history(data, *buf, data->histcount++);
+			/* if (the_strchr(*buf, ';')) is this a command chain? */
 			{
 				*len = j;
 				data->cmd_buf = buf;
@@ -82,7 +82,7 @@ ssize_t the_input(data_t *data)
 		}
 
 		*buf_p = p; /* pass back pointer to current command position */
-		return (_strlen(p)); /* return length of current command */
+		return (the_strlen(p)); /* return length of current command */
 	}
 
 	*buf_p = buf; /* else not a chain, pass back buffer from _getline() */

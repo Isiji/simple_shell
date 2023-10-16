@@ -3,45 +3,45 @@
 /**
  * the_node - adds a node to the start of the list
  * @head: address of pointer to head node
- * @s: str field of node
+ * @str: str field of node
  * @num: node index used by history
  *
  * Return: size of list
  */
-list_t *the_node(list_t **head, const char *s, int num)
+list_t *the_node(list_t **head, const char *str, int num)
 {
-	list_t *n_head;
+	list_t *next_head;
 
 	if (!head)
 		return (NULL);
-	n_head = malloc(sizeof(list_t));
-	if (!n_head)
+	next_head = malloc(sizeof(list_t));
+	if (!next_head)
 		return (NULL);
-	the_memset((void *)n_head, 0, sizeof(list_t));
-	n_head->num = num;
-	if (s)
+	the_memset((void *)next_head, 0, sizeof(list_t));
+	next_head->num = num;
+	if (str)
 	{
-		n_head->s = the_strdup(s);
-		if (!n_head->s)
+		next_head->str = the_strdup(str);
+		if (!next_head->str)
 		{
-			free(n_head);
+			free(next_head);
 			return (NULL);
 		}
 	}
-	n_head->next = *head;
-	*head = n_head;
-	return (n_head);
+	next_head->next = *head;
+	*head = next_head;
+	return (next_head);
 }
 
 /**
  * the_node_end - adds a node to the end of the list
  * @head: address of pointer to head node
- * @s: str field of node
+ * @str: str field of node
  * @num: node index used by history
  *
  * Return: size of list
  */
-list_t *the_node_end(list_t **head, const char *s, int num)
+list_t *the_node_end(list_t **head, const char *str, int num)
 {
 	list_t *n_node, *node;
 
@@ -54,10 +54,10 @@ list_t *the_node_end(list_t **head, const char *s, int num)
 		return (NULL);
 	the_memset((void *)n_node, 0, sizeof(list_t));
 	n_node->num = num;
-	if (s)
+	if (str)
 	{
-		n_node->s = the_strdup(s);
-		if (!n_node->s)
+		n_node->str = the_strdup(str);
+		if (!n_node->str)
 		{
 			free(n_node);
 			return (NULL);

@@ -9,13 +9,13 @@
  */
 int the_cmd(data_t *data, char *path)
 {
-	struct stat s;
+	struct stat st;
 
 	(void)data;
-	if (!path || stat(path, &s))
+	if (!path || stat(path, &st))
 		return (0);
 
-	if (s.s_mode & S_IFREG)
+	if (st.st_mode & S_IFREG)
 	{
 		return (1);
 	}
@@ -30,7 +30,7 @@ int the_cmd(data_t *data, char *path)
  *
  * Return: pointer to new buffer
  */
-char *dup_chars(char *path_sr, int start, int stop)
+char *dup_chars(char *path_s, int start, int stop)
 {
 	static char buf[1024];
 	int i = 0, k = 0;
@@ -57,9 +57,9 @@ char *find_path(data_t *data, char *path_s, char *cmd)
 
 	if (!path_s)
 		return (NULL);
-	if ((the_strlen(cmd) > 2) && starts_with(cmd, "./"))
+	if ((the_strlen(cmd) > 2) && node_start(cmd, "./"))
 	{
-		if (is_cmd(data, cmd))
+		if (the_cmd(data, cmd))
 			return (cmd);
 	}
 	while (1)
@@ -74,7 +74,7 @@ char *find_path(data_t *data, char *path_s, char *cmd)
 				the_strcat(path, "/");
 				the_strcat(path, cmd);
 			}
-			if (is_cmd(data, path))
+			if (the_cmd(data, path))
 				return (path);
 			if (!path_s[i])
 				break;

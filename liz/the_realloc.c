@@ -1,4 +1,4 @@
-#includechar *the_memset(char *p, char b, unsigned int num) "shell.h"
+#include "shell.h"
 
 /**
  * the_memset - fills memory with a constant byte
@@ -56,7 +56,7 @@ void *the_realloc(void *ptr, unsigned int prev_size, unsigned int new_size)
 
 	prev_size = prev_size < new_size ? prev_size : new_size;
 	while (prev_size--)
-		p[prev_size] = ((char *)ptr)[prev_size];
+		t[prev_size] = ((char *)ptr)[prev_size];
 	free(ptr);
 	return (t);
 }

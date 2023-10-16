@@ -15,7 +15,7 @@ int the_exit(data_t *data)
 		if (excheck == -1)
 		{
 			data->status = 2;
-			print_error(data, "Illegal number: ");
+			prt_err(data, "Illegal number: ");
 			the_eputs(data->argv[1]);
 			the_eputchar('\n');
 			return (1);
@@ -45,13 +45,13 @@ int the_cd(data_t *data)
 		dirn = the_getenv(data, "HOME=");
 		if (!dirn)
 			chdirn_rn = /* TODO: what should this be? */
-				chdirn((dirn = _getenv(data, "PWD=")) ? dirn : "/");
+				chdir((dirn = the_getenv(data, "PWD=")) ? dirn : "/");
 		else
-			chdirn_rn = chdirn(dirn);
+			chdirn_rn = chdir(dirn);
 	}
 	else if (the_strcmp(data->argv[1], "-") == 0)
 	{
-		if (!th_getenv(data, "OLDPWD="))
+		if (!the_getenv(data, "OLDPWD="))
 		{
 			the_puts(s);
 			the_putchar('\n');
@@ -59,13 +59,13 @@ int the_cd(data_t *data)
 		}
 		the_puts(the_getenv(data, "OLDPWD=")), the_putchar('\n');
 		chdirn_rn = /* TODO: what should this be? */
-			chdirn((dirn = the_getenv(data, "OLDPWD=")) ? dirn : "/");
+			chdir((dirn = the_getenv(data, "OLDPWD=")) ? dirn : "/");
 	}
 	else
-		chdirn_rn = chdirn(data->argv[1]);
+		chdirn_rn = chdir(data->argv[1]);
 	if (chdirn_rn == -1)
 	{
-		print_error(data, "can't cd to ");
+		prt_err(data, "can't cd to ");
 		the_eputs(data->argv[1]), the_eputchar('\n');
 	}
 	else

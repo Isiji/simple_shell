@@ -67,7 +67,7 @@ size_t print_list(const list_t *h)
 
 	while (h)
 	{
-		the_puts(convert_number(h->num, 10, 0));
+		the_puts(convert_num(h->num, 10, 0));
 		the_putchar(':');
 		the_putchar(' ');
 		the_puts(h->str ? h->str : "(nil)");
@@ -79,20 +79,20 @@ size_t print_list(const list_t *h)
 }
 
 /**
- * node_pref - returns node whose string starts with prefix
+ * starts_with - returns node whose string starts with prefix
  * @node: pointer to list head
  * @pref: string to match
  * @n: the next character after prefix to match
  *
  * Return: match node or null
  */
-list_t *node_pref(list_t *node, char *pre char n)
+list_t *starts_with(list_t *node, char *pre char n)
 {
 	char *k = NULL;
 
 	while (node)
 	{
-		k = the_start(node->str, pref);
+		k = node_start(node->str, pref);
 		if (k && ((n == -1) || (*k == n)))
 			return (node);
 		node = node->next;

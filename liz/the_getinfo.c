@@ -24,13 +24,13 @@ void set_data(data_t *data, char **av)
 	data->fname = av[0];
 	if (data->arg)
 	{
-		data->argv = strtow(data->arg, " \t");
+		data->argv = str_wrd(data->arg, " \t");
 		if (!data->argv)
 		{
 			data->argv = malloc(sizeof(char *) * 2);
 			if (data->argv)
 			{
-				data->argv[0] = _strdup(data->arg);
+				data->argv[0] = the_strdup(data->arg);
 				data->argv[1] = NULL;
 			}
 		}
@@ -38,7 +38,7 @@ void set_data(data_t *data, char **av)
 			;
 		data->argc = i;
 
-		replace_alias(data);
+		rep_alias(data);
 		replace_vars(data);
 	}
 }
@@ -50,7 +50,7 @@ void set_data(data_t *data, char **av)
  */
 void free_data(data_t *data, int all)
 {
-	ffree(data->argv);
+	free_str(data->argv);
 	data->argv = NULL;
 	data->path = NULL;
 	if (all)
@@ -58,14 +58,14 @@ void free_data(data_t *data, int all)
 		if (!data->cmd_buf)
 			free(data->arg);
 		if (data->env)
-			free_list(&(data->env));
+			free_node(&(data->env));
 		if (data->history)
-			free_list(&(data->history));
+			free_node(&(data->history));
 		if (data->alias)
-			free_list(&(data->alias));
-		ffree(data->environ);
+			free_node(&(data->alias));
+		free_str(data->environ);
 			data->environ = NULL;
-		bfree((void **)data->cmd_buf);
+		free_p((void **)data->cmd_buf);
 		if (data->readdt > 2)
 			close(data->readdt);
 		the_putchar(BUF_FLUSH);

@@ -8,7 +8,7 @@
  */
 int the_env(data_t *data)
 {
-	print_list_str(data->env);
+	print_list(data->env);
 	return (0);
 }
 
@@ -26,7 +26,7 @@ char *the_getenv(data_t *data, const char *name)
 
 	while (node)
 	{
-		t = starts_with(node->str, name);
+		t = node_start(node->str, name);
 		if (t && *t)
 			return (t);
 		node = node->next;
@@ -35,13 +35,13 @@ char *the_getenv(data_t *data, const char *name)
 }
 
 /**
- * the_setenv - Initialize a new environment variable,
+ * the_setenvr - Initialize a new environment variable,
  *             or modify an existing one
  * @data: Structure containing potential arguments. Used to maintain
  *        constant function prototype.
  *  Return: Always 0
  */
-int the_setenv(data_t *data)
+int the_setenvr(data_t *data)
 {
 	if (data->argc != 3)
 	{
@@ -54,12 +54,12 @@ int the_setenv(data_t *data)
 }
 
 /**
- * the_unsetenv - Remove an environment variable
+ * the_unsetenvr - Remove an environment variable
  * @data: Structure containing potential arguments. Used to maintain
  *        constant function prototype.
  * Return: Always 0
  */
-int the_unsetenv(data_t *data)
+int the_unsetenvr(data_t *data)
 {
 	int j;
 
@@ -68,7 +68,7 @@ int the_unsetenv(data_t *data)
 		the_eputs("Too few arguements.\n");
 		return (1);
 	}
-	for (j = 1; j <= data->argc; i++)
+	for (j = 1; j <= data->argc; j++)
 		the_unsetenv(data, data->argv[j]);
 
 	return (0);
@@ -86,7 +86,7 @@ int pop_envlist(data_t *data)
 	size_t j;
 
 	for (j = 0; environ[j]; j++)
-		add_node_end(&node, environ[j], 0);
+		the_node_end(&node, environ[j], 0);
 	data->env = node;
 	return (0);
 }

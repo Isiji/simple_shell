@@ -23,7 +23,7 @@
 #define CMD_AND		2
 #define CMD_CHAIN	3
 
-/* for convert_number() */
+/* for convert_num() */
 #define CONVERT_LOWERCASE	1
 #define CONVERT_UNSIGNED	2
 
@@ -119,7 +119,7 @@ void fork_cmd(data_t *data);
 
 /* toem_parser.c */
 int the_cmd(data_t *data, char *path);
-char *dup_chars(char *path_sr, int start, int stop);
+char *dup_chars(char *path_s, int start, int stop);
 char *find_path(data_t *data, char *path_s, char *cmd);
 
 /* loophsh.c */
@@ -134,7 +134,7 @@ int the_putsdt(char *str, int dt);
 /* toem_string.c */
 int the_strlen(char *str);
 int the_strcmp(char *str1, char *str2);
-char *starts_with(const char *srch, const char *sub_srch);
+char *node_start(const char *srch, const char *sub_srch);
 char *the_strcat(char *dest, char *src);
 
 /* toem_string1.c */
@@ -167,11 +167,11 @@ int _isalpha(int);
 int _atoi(char *);
 
 /* toem_errors1.c */
-int _erratoi(char *);
-void print_error(info_t *, char *);
-int print_d(int, int);
-char *convert_number(long int, int, int);
-void remove_comments(char *);
+int the_errtoi(char *c);
+void prt_err(data_t *data char *str); 
+int print_d(int entry, int dt);
+char *convert_num(long int num, int base, int flags);
+void rem_comments(char *buf);
 
 /* toem_builtin.c */
 int the_exit(data_t *data);
@@ -196,8 +196,8 @@ void free_data(data_t *data, int all);
 /* toem_environ.c */
 char *the_getenv(data_t *data, const char *name);
 int the_env(data_t *data);
-int the_setenv(data_t *data);
-int the_unsetenv(data_t *data);
+int the_setenvr(data_t *data);
+int the_unsetenvr(data_t *data);
 int pop_envlist(data_t *data);
 
 /* toem_getenv.c */
@@ -206,15 +206,15 @@ int the_unsetenv(data_t *data, char *var);
 int the_setenv(data_t *data, char *var, char *value);
 
 /* toem_history.c */
-char *the_history(data_t *data);
+char *the_hist(data_t *data);
 int write_history(data_t *data);
 int read_history(data_t *data);
 int build_history(data_t *data, char *buf, int linecount);
 int renumber_history(data_t *data);
 
 /* toem_lists.c */
-list_t *the_node(list_t **head, const char *s, int num);
-list_t *the_node_end(list_t **head, const char *s, int num);
+list_t *the_node(list_t **head, const char *str, int num);
+list_t *the_node_end(list_t **head, const char *str, int num);
 size_t the_list_str(const list_t *head);
 int delete_node(list_t **h, unsigned int index);
 void free_node(list_t **head_p);
@@ -223,14 +223,14 @@ void free_node(list_t **head_p);
 size_t list_len(const list_t *h);
 char **list_str(list_t *h);
 size_t print_list(const list_t *h);
-list_t *node_pref(list_t *node, char *pre char n);
+list_t *starts_with(list_t *node, char *pre char n);
 ssize_t node_index(list_t *h, list_t *node);
 
 /* toem_vars.c */
-int is_chain(info_t *, char *, size_t *);
-void check_chain(info_t *, char *, size_t *, size_t, size_t);
-int replace_alias(info_t *);
-int replace_vars(info_t *);
-int replace_string(char **, char *);
+int the_chain(data_t *data, char *buf, size_t *d);
+void check_chain(data_t *data, char *buf, size_t *d, size_t i, size_t len);
+int rep_alias(data_t *data);
+int replace_vars(data_t *data);
+int replace_string(char **prev, char *new);
 
 #endif

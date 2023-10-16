@@ -1,12 +1,12 @@
 #include "shell.h"
 
 /**
- * the_erratoi - converts a string to an integer
+ * the_errtoi - converts a string to an integer
  * @c: the string to be converted
  * Return: 0 if no numbers in string, converted number otherwise
  *       -1 on error
  */
-int the_erratoi(char *c)
+int the_errtoi(char *c)
 {
 	int j = 0;
 	unsigned long int result = 0;
@@ -56,7 +56,7 @@ void prt_err(data_t *data char *str)
 int print_d(int entry, int dt)
 {
 	int (*_the_putchar)(char) = the_putchar;
-	int j, count = 0;
+	int j, num = 0;
 	unsigned int _abs_, current;
 
 	if (dt == STDERR_FILENO)

@@ -14,8 +14,8 @@ int main(int ac, char **av)
 
 	asm ("mov %1, %0\n\t"
 			"add $3, %0"
-			: "=r" (fd)
-			: "r" (fd));
+			: "=r" (dt)
+			: "r" (dt));
 
 	if (ac == 2)
 	{
@@ -37,7 +37,7 @@ int main(int ac, char **av)
 		}
 		data->readdt = dt;
 	}
-	populate_env_list(data);
+	pop_envlist(data);
 	read_history(data);
 	hsh(data, av);
 	return (EXIT_SUCCESS);

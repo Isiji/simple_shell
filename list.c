@@ -123,7 +123,7 @@ size_t print_list_strings(const StringList *head)
 int delete_list_node(StringList **head_pointer, unsigned int index)
 {
 	StringList *node, *prev_node;
-	unsigned int size = 0;
+	unsigned int i = 0;
 
 	if (!head_pointer || !*head_pointer)
 		return (0);
@@ -140,14 +140,14 @@ int delete_list_node(StringList **head_pointer, unsigned int index)
 	node = *head_pointer;
 	while (node)
 	{
-		if (size == index)
+		if (i == index)
 		{
 			prev_node->next = node->next;
 			free(node->str);
 			free(node);
 			return (1);
 		}
-		size++;
+		i++;
 		prev_node = node;
 		node = node->next;
 	}

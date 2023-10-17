@@ -35,12 +35,12 @@ return (0);
 char *dup_chars(char *path_s, int start, int stop)
 {
 	static char buf[1024];
-	int j = 0, size = 0;
+	int i = 0, k = 0;
 
-	for (j = 0, size = start; size < stop; size++)
-		if (path_s[size] != ':')
-			buf[j++] = path_s[size];
-	buf[j] = 0;
+	for (k = 0, i = start; i < stop; i++)
+		if (path_s[i] != ':')
+			buf[k++] = path_s[i];
+	buf[k] = 0;
 	return (buf);
 }
 
@@ -54,7 +54,7 @@ char *dup_chars(char *path_s, int start, int stop)
  */
 char *find_command_path(CommandData *data, char *path_s, char *cmd)
 {
-	int size = 0, curr_pos = 0;
+	int i = 0, curr_pos = 0;
 	char *path;
 
 	if (!path_s)
@@ -66,9 +66,9 @@ char *find_command_path(CommandData *data, char *path_s, char *cmd)
 	}
 	while (1)
 	{
-		if (!path_s[size] || path_s[size] == ':')
+		if (!path_s[i] || path_s[i] == ':')
 		{
-			path = dup_chars(path_s, curr_pos, size);
+			path = dup_chars(path_s, curr_pos, i);
 			if (!*path)
 				concatenate_strings(path, cmd);
 			else
@@ -79,11 +79,11 @@ char *find_command_path(CommandData *data, char *path_s, char *cmd)
 			if (handle_command(data, path))
 
 				return (path);
-			if (!path_s[size])
+			if (!path_s[i])
 				break;
-			curr_pos = size;
+			curr_pos = i;
 		}
-		size++;
+		i++;
 	}
 	return (NULL);
 }

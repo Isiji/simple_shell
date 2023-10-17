@@ -226,7 +226,7 @@ void free_node(list_t **head_p);
 size_t list_len(const list_t *h);
 char **list_str(list_t *h);
 size_t print_list(const list_t *h);
-list_t *starts_with(list_t *node, char *pre char n);
+list_t *starts_with(list_t *node, char *pref char n);
 ssize_t node_index(list_t *h, list_t *node);
 
 /* toem_vars.c */

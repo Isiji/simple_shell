@@ -86,7 +86,7 @@ size_t print_list(const list_t *h)
  *
  * Return: match node or null
  */
-list_t *starts_with(list_t *node, char *pre char n)
+list_t *starts_with(list_t *node, char *pref char n)
 {
 	char *k = NULL;
 

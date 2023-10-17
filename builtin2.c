@@ -71,7 +71,7 @@ int print_alias(StringList *node)
 	{
 		pointer = find_character_in_string(node->str, '=');
 		for (alias = node->str; alias <= pointer; alias++)
-			print_character(*alias);
+		print_character(*alias);
 		print_character('\'');
 		print_string(pointer + 1);
 		print_string_descriptor("\n", STDOUT_FILENO);

@@ -15,16 +15,8 @@ ssize_t entry_buffer(CommandData *data, char **buf, size_t *len)
 
 	if (!*len) /* if nothing left in the buffer, fill it */
 	{
-		/*bfree((void **)info->cmd_buf);*/
-		if (!*buf)
-		{
-			*buf = malloc(READ_BUFFER_SIZE);
-			if (*buf == NULL)
-			{
-				print_error_message("memory allocation failed");
-				exit(EXIT_FAILURE);
-			}
-		}
+		free(*buf);
+		*buf = NULL;
 		signal(SIGINT, handle_interrupt_signal);
 #if USE_GETLINE
 		r = getline(buf, &len_p, stdin);
@@ -67,7 +59,7 @@ ssize_t read_input(CommandData *data)
 	char **buf_p = &(data->arguments);
 	char *p;
 
-	handle_interrupt_signal(0);
+	print_character(BUFFER_FLUSH);
 
 	r = entry_buffer(data, &buf, &len);
 
@@ -99,8 +91,8 @@ ssize_t read_input(CommandData *data)
 		return (string_length(p));
 	}
 
-	*buf_p = buf; /* else not a chain, pass back buffer from custom_getline() */
-	return (r); /* return length of buffer from custom_getline() */
+	*buf_p = buf;
+	return (r);
 }
 
 /**
@@ -157,25 +149,25 @@ int custom_getline(CommandData *data, char **ptr, size_t *length)
 	c = find_character_in_string(buf + i, '\n');
 	k = c ? 1 + (unsigned int)(c - buf) : len;
 
-new_p = copy_string_with_length(p, buf + i, k - i);
+	new_p = reallocate_memory(p, s, s ? s + k : k + 1);
 
-if (s)
-{
-	concatenate_strings_with_length(new_p, buf + i, k - i);
-}
-else
-{
-	copy_string_with_length(new_p, buf + i, k - i + 1);
-}
-s += k - i;
-i = k;
-p = new_p;
+	if (!new_p)
+		return (p ? free(p), -1 : -1);
+	if (s)
+		concatenate_strings_with_length(new_p, buf + i, k - i);
+	else
+	{
+		copy_string_with_length(new_p, buf + i, k - i + 1);
+	}
+	s += k - i;
+	i = k;
+	p = new_p;
 
-if (length)
-	*length = s;
+	if (length)
+		*length = s;
 
-*ptr = p;
-return (s);
+	*ptr = p;
+	return (s);
 }
 
 /**

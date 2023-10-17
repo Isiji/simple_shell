@@ -22,13 +22,13 @@ int handle_environment(CommandData *data)
 char *get_environment_variable(CommandData *data, const char *variable_name)
 {
 	StringList *node = data->env;
-	char *result;
+	char *p;
 
 	while (node)
 	{
-		result = string_starts_with(node->str, variable_name);
-		if (result && *result)
-			return (result);
+		p = string_starts_with(node->str, variable_name);
+		if (p && *p)
+			return (p);
 		node = node->next;
 	}
 	return (NULL);

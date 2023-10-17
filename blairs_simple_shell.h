@@ -158,7 +158,7 @@ char **split_string_version2(char *string, char delimiter);
 char *fill_memory_with_character(char *pointer, char character,
 		unsigned int number);
 void free_string_array(char **strings);
-void *resize_allocated_memory(void *pointer, unsigned int previous_size,
+void *reallocate_memory(void *pointer, unsigned int previous_size,
 		unsigned int new_size);
 
 /* Memory Management Functions */

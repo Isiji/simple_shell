@@ -9,12 +9,12 @@
  */
 int execute_exit(CommandData *data)
 {
-	int exit_status;
+	int ext_status;
 
 	if (data->argv[1])
 	{
-		exit_status = custom_atoi(data->argv[1]);
-		if (exit_status == -1)
+		ext_status = custom_atoi(data->argv[1]);
+		if (ext_status == -1)
 		{
 			data->status = 2;
 			print_error_message_v2(data, "Illegal number: ");
@@ -38,17 +38,17 @@ int execute_exit(CommandData *data)
  */
 int execute_cd(CommandData *data)
 {
-	char *current_directory, *new_directory, buffer[1024], **custom_env;
-	int change_directory_result;
+	char *curr_dir, *new_dir, buffer[1024], **custom_env;
+	int change_dir_result;
 
-	current_directory = getcwd(buffer, 1024);
-	if (!current_directory)
+	curr_dir = getcwd(buffer, 1024);
+	if (!curr_dir)
 		print_error_message_v2(data, "getcwd failure\n");
 	if (!data->argv[1])
 	{
 		char **env;
 
-		new_directory = NULL;
+		new_dir = NULL;
 
 		custom_env = get_custom_environment(data);
 		if (custom_env)
@@ -57,32 +57,32 @@ int execute_cd(CommandData *data)
 			{
 				if (startsWith(*env, "HOME="))
 				{
-					new_directory = *env + 5;
+					new_dir = *env + 5;
 					break;
 				}
 			}
 			free(custom_env);
 		}
-		if (new_directory)
-			change_directory_result = chdir(new_directory);
+		if (new_dir)
+			change_dir_result = chdir(new_dir);
 		else
-			change_directory_result = chdir("/");
+			change_dir_result = chdir("/");
 	}
 	else if (compare_strings(data->argv[1], "-") == 0)
 	{
-		new_directory = get_environment_variable(data, "OLDPWD=");
-		if (!new_directory)
+		new_dir = get_environment_variable(data, "OLDPWD=");
+		if (!new_dir)
 		{
-			print_string(current_directory);
+			print_string(curr_dir);
 			print_string_descriptor("\n", STDOUT_FILENO);
 			return (1);
 		}
-		print_string(new_directory), print_string_descriptor("\n", STDOUT_FILENO);
-		change_directory_result = chdir(new_directory);
+		print_string(new_dir), print_string_descriptor("\n", STDOUT_FILENO);
+		change_dir_result = chdir(new_dir);
 	}
 	else
-		change_directory_result = chdir(data->argv[1]);
-	if (change_directory_result == -1)
+		change_dir_result = chdir(data->argv[1]);
+	if (change_dir_result == -1)
 	{
 		print_error_message_v2(data, "can't cd to ");
 		print_error_message(data->argv[1]);
@@ -105,12 +105,11 @@ int execute_cd(CommandData *data)
  */
 int execute_help(CommandData *data)
 {
-	char **argument_array;
+	char **arg_array;
 
-	argument_array = data->argv;
+	arg_array = data->argv;
 	print_string("help call works. Function not yet implemented \n");
 	if (0)
-		print_string(*argument_array); /* Temporary attribute_unused workaround */
+		print_string(*arg_array); /* Temporary attribute_unused workaround */
 	return (0);
 }
-

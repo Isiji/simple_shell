@@ -22,18 +22,18 @@ int execute_history(CommandData *data)
  */
 int remove_alias(CommandData *data, char *alias_string)
 {
-	char *alias_name, alias_character;
-	int removal_result;
+	char *alias_title, alias_trait;
+	int rem_outcome;
 
-	alias_name = find_character_in_string(alias_string, '=');
-	if (!alias_name)
+	alias_title = find_character_in_string(alias_string, '=');
+	if (!alias_title)
 		return (1);
-	alias_character = *alias_name;
-	*alias_name = 0;
-	removal_result = delete_list_node(&(data->alias), find_node_index(data->alias,
+	alias_trait = *alias_title;
+	*alias_title = 0;
+	rem_outcome = delete_list_node(&(data->alias), find_node_index(data->alias,
 				find_prefixed_node(data->alias, alias_string, -1)));
-	*alias_name = alias_character;
-	return (removal_result);
+	*alias_title = alias_trait;
+	return (rem_outcome);
 }
 
 /**
@@ -45,12 +45,12 @@ int remove_alias(CommandData *data, char *alias_string)
  */
 int create_alias(CommandData *data, char *alias_string)
 {
-	char *alias_value;
+	char *alias_v;
 
-	alias_value = find_character_in_string(alias_string, '=');
-	if (!alias_value)
+	alias_v = find_character_in_string(alias_string, '=');
+	if (!alias_v)
 		return (1);
-	if (!*++alias_value)
+	if (!*++alias_v)
 		return (remove_alias(data, alias_string));
 
 	remove_alias(data, alias_string);
@@ -65,15 +65,15 @@ int create_alias(CommandData *data, char *alias_string)
  */
 int print_alias(StringList *node)
 {
-	char *pointer = NULL, *alias = NULL;
+	char *ptr = NULL, *alias = NULL;
 
 	if (node)
 	{
-		pointer = find_character_in_string(node->str, '=');
-		for (alias = node->str; alias <= pointer; alias++)
+		ptr = find_character_in_string(node->str, '=');
+		for (alias = node->str; alias <= ptr; alias++)
 		print_character(*alias);
 		print_character('\'');
-		print_string(pointer + 1);
+		print_string(ptr + 1);
 		print_string_descriptor("\n", STDOUT_FILENO);
 		return (0);
 	}
@@ -88,8 +88,8 @@ int print_alias(StringList *node)
  */
 int execute_alias(CommandData *data)
 {
-	int j = 0;
-	char *t = NULL;
+	int z = 0;
+	char *n = NULL;
 	StringList *node = NULL;
 
 	if (data->argument_count == 1)
@@ -102,15 +102,14 @@ int execute_alias(CommandData *data)
 		}
 		return (0);
 	}
-	for (j = 1; data->argv[j]; j++)
+	for (z = 1; data->argv[z]; z++)
 	{
-		t = find_character_in_string(data->argv[j], '=');
-		if (t)
-			create_alias(data, data->argv[j]);
+		n = find_character_in_string(data->argv[z], '=');
+		if (n)
+			create_alias(data, data->argv[z]);
 		else
-			print_alias(find_prefixed_node(data->alias, data->argv[j], '='));
+			print_alias(find_prefixed_node(data->alias, data->argv[z], '='));
 	}
 
 	return (0);
 }
-

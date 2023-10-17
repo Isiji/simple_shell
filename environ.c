@@ -22,13 +22,13 @@ int handle_environment(CommandData *data)
 char *get_environment_variable(CommandData *data, const char *variable_name)
 {
 	StringList *node = data->env;
-	char *p;
+	char *a;
 
 	while (node)
 	{
-		p = string_starts_with(node->str, variable_name);
-		if (p && *p)
-			return (p);
+		a = string_starts_with(node->str, variable_name);
+		if (a && *a)
+			return (a);
 		node = node->next;
 	}
 	return (NULL);
@@ -62,15 +62,15 @@ int set_environment_variable(CommandData *data)
  */
 int unset_environment_variable(CommandData *data)
 {
-	int j;
+	int z;
 
 	if (data->argument_count == 1)
 	{
 		print_error_message("Too few arguments.\n");
 		return (1);
 	}
-	for (j = 1; j <= data->argument_count; j++)
-		unset_custom_environment_variable(data, data->argv[j]);
+	for (z = 1; z <= data->argument_count; z++)
+		unset_custom_environment_variable(data, data->argv[z]);
 
 	return (0);
 }
@@ -84,11 +84,10 @@ int unset_environment_variable(CommandData *data)
 int pop_environment_list(CommandData *data)
 {
 	StringList *node = NULL;
-	size_t j;
+	size_t p;
 
-	for (j = 0; environ[j]; j++)
-		create_list_node_at_end(&node, environ[j], 0);
+	for (p = 0; environ[p]; p++)
+		create_list_node_at_end(&node, environ[p], 0);
 	data->env = node;
 	return (0);
 }
-

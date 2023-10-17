@@ -102,12 +102,6 @@ char *convert_integer_to_string(long int num, int base, int flags)
 	char *ptr;
 	unsigned long n = num;
 
-	if (base <= 0)
-	{
-
-		base = 10;
-	}
-
 	if (!(flags & CONVERT_TO_UNSIGNED) && num < 0)
 	{
 		n = -num;

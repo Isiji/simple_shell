@@ -9,7 +9,7 @@
  */
 int execute_history(CommandData *data)
 {
-	print_list_strings(data->history);
+	print_linked_list(data->history);
 	return (0);
 }
 

@@ -62,37 +62,36 @@ int set_custom_environment_variable(CommandData *data,
 		char *variable, char *value)
 {
 	StringList *node;
-	char *prefix;
-	char *buffer = NULL;
+	char *pref;
+	char *buff = NULL;
 
 	if (!variable || !value)
 		return (0);
 
-	buffer = malloc(string_length(variable) + string_length(value) + 2);
-	if (!buffer)
+	buff = malloc(string_length(variable) + string_length(value) + 2);
+	if (!buff)
 		return (1);
 
-	copy_string(buffer, variable);
-	concatenate_strings(buffer, "=");
-	concatenate_strings(buffer, value);
+	copy_string(buff, variable);
+	concatenate_strings(buff, "=");
+	concatenate_strings(buff, value);
 
 	node = data->env;
 	while (node)
 	{
-		prefix = string_starts_with(node->str, variable);
-		if (prefix && *prefix == '=')
+		pref = string_starts_with(node->str, variable);
+		if (pref && *pref == '=')
 		{
 			free(node->str);
-			node->str = buffer;
+			node->str = buff;
 			data->environment_changed = 1;
 			return (0);
 		}
 		node = node->next;
 	}
 
-	create_list_node_at_end(&(data->env), buffer, 0);
-	free(buffer);
+	create_list_node_at_end(&(data->env), buff, 0);
+	free(buff);
 	data->environment_changed = 1;
 	return (0);
 }
-

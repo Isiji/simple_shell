@@ -5,7 +5,7 @@
  * create_list_node - creates a new node and
  * adds it at the beginning of the list
  * @head_pointer: address of the pointer to the head node
- * @string: string for the new node
+ * @str: string for the new node
  * @number: node index used by history
  *
  * Return: Allocated list node
@@ -46,7 +46,7 @@ StringList *create_list_node(StringList **head_pointer, const char *str,
  * create_list_node_at_end - creates a new node and
  * adds it at the end of the list
  * @head_pointer: address of the pointer to the head node
- * @string: string for the new node
+ * @str: string for the new node
  * @number: node index used by history
  *
  * Return: Allocated list node

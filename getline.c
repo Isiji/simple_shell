@@ -10,38 +10,33 @@
  */
 ssize_t entry_buffer(CommandData *data, char **buf, size_t *len)
 {
-	ssize_t r = 0;
-	size_t len_p = 0;
+	ssize_t k = 0;
+	size_t ptrlen = 0;
 
 	if (!*len)
 	{
 		free(*buf);
 		*buf = NULL;
 		signal(SIGINT, handle_interrupt_signal);
-#if USE_GETLINE
-		r = getline(buf, &len_p, stdin);
-#else
-		r = custom_getline(data, buf, &len_p);
-#endif
-		if (r > 0)
+
+		k = custom_getline(data, buf, &ptrlen);
+		if (k > 0)
 		{
-			if ((*buf)[r - 1] == '\n')
+			if ((*buf)[k - 1] == '\n')
 			{
-				(*buf)[r - 1] = '\0';
-				r--;
+				(*buf)[k - 1] = '\0';
+				k--;
 			}
 			data->linecount_flag = 1;
 			remove_comments_from_string(*buf);
 			build_command_history(data, *buf, data->history_count++);
-			/* if (_strchr(*buf, ';')) is this a command chain? */
-			/*if (find_character_in_string(*buf, ';'))*/
 			{
-				*len = r;
+				*len = k;
 				data->command_buffer = buf;
 			}
 		}
 	}
-	return (r);
+	return (k);
 }
 
 

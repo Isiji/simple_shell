@@ -1,6 +1,5 @@
 #include "blairs_simple_shell.h"
 
-
 /**
  * the_erratoi - converts a string to an integer
  * @c: the string to be converted
@@ -9,17 +8,17 @@
  */
 int the_erratoi(char *c)
 {
-	int j = 0;
+	int t = 0;
 	unsigned long int result = 0;
 
 	if (*c == '+')
 		c++;  /* TODO: why does this make main return 255? */
-	for (j = 0; c[j] != '\0'; j++)
+	for (t = 0; c[t] != '\0'; t++)
 	{
-		if (c[j] >= '0' && c[j] <= '9')
+		if (c[t] >= '0' && c[t] <= '9')
 		{
 			result *= 10;
-			result += (c[j] - '0');
+			result += (c[t] - '0');
 			if (result > INT_MAX)
 				return (-1);
 		}
@@ -57,8 +56,8 @@ void print_error_message_v2(CommandData *data, char *str)
 int print_integer_v2(int entry, int dt)
 {
 	int (*_the_putchar)(char) = print_error_character;
-	int j, num = 0;
-	unsigned int _abs_, current;
+	int t, count = 0;
+	unsigned int _abs_, curr;
 
 	if (dt == STDERR_FILENO)
 		_the_putchar = print_error_character;
@@ -66,24 +65,24 @@ int print_integer_v2(int entry, int dt)
 	{
 		_abs_ = -entry;
 		_the_putchar('-');
-		num++;
+		count++;
 	}
 	else
 		_abs_ = entry;
-	current = _abs_;
-	for (j = 1000000000; j > 1; j /= 10)
+	curr = _abs_;
+	for (t = 1000000000; t > 1; t /= 10)
 	{
-		if (_abs_ / j)
+		if (_abs_ / t)
 		{
-			_the_putchar('0' + current / j);
-			num++;
+			_the_putchar('0' + curr / t);
+			count++;
 		}
-		current %= j;
+		curr %= t;
 	}
-	_the_putchar('0' + current);
-	num++;
+	_the_putchar('0' + curr);
+	count++;
 
-	return (num);
+	return (count);
 }
 
 /**
@@ -133,13 +132,12 @@ char *convert_integer_to_string(long int num, int base, int flags)
  */
 void remove_comments_from_string(char *buf)
 {
-	int j;
+	int i;
 
-	for (j = 0; buf[j] != '\0'; j++)
-		if (buf[j] == '#' && (!j || buf[j - 1] == ' '))
+	for (i = 0; buf[i] != '\0'; i++)
+		if (buf[i] == '#' && (!i || buf[i - 1] == ' '))
 		{
-			buf[j] = '\0';
+			buf[i] = '\0';
 			break;
 		}
 }
-

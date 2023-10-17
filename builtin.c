@@ -11,7 +11,7 @@ int execute_exit(CommandData *data)
 {
 	int exit_status;
 
-	if (data->argv[1]) /* If there is an exit argument */
+	if (data->argv[1])
 	{
 		exit_status = custom_atoi(data->argv[1]);
 		if (exit_status == -1)
@@ -19,7 +19,7 @@ int execute_exit(CommandData *data)
 			data->status = 2;
 			print_error_message_v2(data, "Illegal number: ");
 			print_error_message(data->argv[1]);
-			print_string_descriptor("\n", STDOUT_FILENO);
+			print_error_character('\n');
 			return (1);
 		}
 		data->error_number = custom_atoi(data->argv[1]);
@@ -94,7 +94,7 @@ int execute_cd(CommandData *data)
 				get_environment_variable(data, "PWD="));
 		set_custom_environment_variable(data, "PWD", getcwd(buffer, 1024));
 	}
-	return (0);
+	return (0); 
 }
 
 /**

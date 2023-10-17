@@ -18,11 +18,9 @@ ssize_t entry_buffer(CommandData *data, char **buf, size_t *len)
 		free(*buf);
 		*buf = NULL;
 		signal(SIGINT, handle_interrupt_signal);
-#if USE_GETLINE
-		r = getline(buf, &len_p, stdin);
-#else
+
 		r = custom_getline(data, buf, &len_p);
-#endif
+
 		if (r > 0)
 		{
 			if ((*buf)[r - 1] == '\n')

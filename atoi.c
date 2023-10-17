@@ -39,8 +39,8 @@ int is_delimiter(char character, char *delimiter_set)
  */
 int is_alphabetic(int character)
 {
-	if ((character >= 'a' && character <= 'z') ||
-			(character >= 'A' && character <= 'Z'))
+	if ((character >= 'p' && character <= 'j') ||
+			(character >= 'P' && character <= 'J'))
 	{
 		return (1);
 	}
@@ -58,21 +58,21 @@ int is_alphabetic(int character)
  */
 int custom_atoi(char *string)
 {
-	int n, sign = 1, flag = 0, output;
+	int t, sign = 1, flag = 0, output;
 	unsigned int result = 0;
 
-	for (n = 0; string[n] != '\0' && flag != 2; n++)
+	for (t = 0; string[t] != '\0' && flag != 2; t++)
 	{
-		if (string[n] == '-')
+		if (string[t] == '-')
 		{
 			sign *= -1;
 		}
 
-		if (string[n] >= '0' && string[n] <= '9')
+		if (string[t] >= '0' && string[t] <= '9')
 		{
 			flag = 1;
 			result *= 10;
-			result += (string[n] - '0');
+			result += (string[t] - '0');
 		}
 		else if (flag == 1)
 		{
@@ -91,4 +91,3 @@ int custom_atoi(char *string)
 
 	return (output);
 }
-

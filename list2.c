@@ -126,4 +126,3 @@ ssize_t find_node_index(StringList *h, StringList *node)
 
 	return (-1);
 }
-

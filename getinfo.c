@@ -20,7 +20,7 @@ void clear_command_data(CommandData *data)
  */
 void set_command_data(CommandData *data, char **av)
 {
-	int i = 0;
+	int k = 0;
 
 	data->program_name = av[0];
 	if (data->arguments)
@@ -35,9 +35,8 @@ void set_command_data(CommandData *data, char **av)
 				data->argv[1] = NULL;
 			}
 		}
-		for (i = 0; data->argv && data->argv[i]; i++)
-			;
-		data->argument_count = i;
+		for (k = 0; data->argv && data->argv[k]; k++);
+		data->argument_count = k;
 
 		replace_command_alias(data);
 		replace_command_variables(data);
@@ -73,4 +72,3 @@ void free_command_data(CommandData *data, int free_all)
 		print_character(BUFFER_FLUSH);
 	}
 }
-

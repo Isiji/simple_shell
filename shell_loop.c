@@ -9,18 +9,18 @@
 int shell_loop(CommandData *data, char **arguments)
 {
 	int builtin_return = 0;
-	ssize_t r = 0;
+	ssize_t n = 0;
 
-	while (r != -1 && builtin_return != -2)
+	while (n != -1 && builtin_return != -2)
 	{
 		clear_command_data(data);
 
 		if (interpret(data))
 			print_string("HOME $ ");
 		print_error_character(BUFFER_FLUSH);
-		r = read_input(data);
+		n = read_input(data);
 
-		if (r != -1)
+		if (n != -1)
 		{
 			set_command_data(data, arguments);
 			builtin_return = find_builtin(data);
@@ -55,7 +55,7 @@ int shell_loop(CommandData *data, char **arguments)
  */
 int find_builtin(CommandData *data)
 {
-	int i, builtin_return = -1;
+	int j, builtin_return = -1;
 
 	BuiltinCommandTable builtins[] = {
 		{"exit", execute_exit},
@@ -69,12 +69,12 @@ int find_builtin(CommandData *data)
 		{NULL, NULL}
 	};/*deal with alias*/
 
-	for (i = 0; builtins[i].type; i++)
+	for (j = 0; builtins[j].type; j++)
 	{
-		if (compare_strings(data->argv[0], builtins[i].type) == 0)
+		if (compare_strings(data->argv[0], builtins[j].type) == 0)
 		{
 			data->line_counter++;
-			builtin_return = builtins[i].function(data);
+			builtin_return = builtins[j].function(data);
 			break;
 		}
 	}
@@ -91,7 +91,7 @@ int find_builtin(CommandData *data)
 void find_command(CommandData *data)
 {
 	char *path = NULL;
-	int i, argument_count;
+	int j, argument_num;
 
 	data->path = data->argv[0];
 
@@ -101,14 +101,14 @@ void find_command(CommandData *data)
 		data->linecount_flag = 0;
 	}
 
-	for (i = 0, argument_count = 0; data->arguments[i]; i++)
+	for (j = 0, argument_num = 0; data->arguments[j]; j++)
 	{
-		if (!is_delimiter(data->arguments[i], " \t\n"))
+		if (!is_delimiter(data->arguments[j], " \t\n"))
 		{
-			argument_count++;
+			argument_num++;
 		}
 	}
-	if (!argument_count)
+	if (!argument_num)
 	{
 		return;
 	}
@@ -177,4 +177,3 @@ void fork_command(CommandData *data)
 		}
 	}
 }
-

@@ -127,38 +127,38 @@ ssize_t read_buffer(CommandData *data, char *buf, size_t *i)
 int custom_getline(CommandData *data, char **ptr, size_t *length)
 {
 	static char buf[READ_BUFFER_SIZE];
-	static size_t i, len;
-	size_t k;
-	ssize_t r = 0, s = 0;
+	static size_t t, len;
+	size_t z;
+	ssize_t n = 0, s = 0;
 	char *p = NULL, *new_p = NULL, *c;
 
 	p = *ptr;
 	if (p && length)
 		s = *length;
 
-	if (i == len)
-		i = len = 0;
+	if (t == len)
+		t = len = 0;
 
-	r = read_buffer(data, buf, &len);
+	n = read_buffer(data, buf, &len);
 
-	if (r == -1 || (r == 0 && len == 0))
+	if (n == -1 || (n == 0 && len == 0))
 		return (-1);
 
-	c = find_character_in_string(buf + i, '\n');
-	k = c ? 1 + (unsigned int)(c - buf) : len;
+	c = find_character_in_string(buf + t, '\n');
+	z = c ? 1 + (unsigned int)(c - buf) : len;
 
-	new_p = reallocate_memory(p, s, s ? s + k : k + 1);
+	new_p = reallocate_memory(p, s, s ? s + z : z + 1);
 
 	if (!new_p)
 		return (p ? free(p), -1 : -1);
 	if (s)
-		concatenate_strings_with_length(new_p, buf + i, k - i);
+		concatenate_strings_with_length(new_p, buf + t, z - t);
 	else
 	{
-		copy_string_with_length(new_p, buf + i, k - i + 1);
+		copy_string_with_length(new_p, buf + t, z - t + 1);
 	}
-	s += k - i;
-	i = k;
+	s += z - t;
+	t = z;
 	p = new_p;
 
 	if (length)
@@ -179,4 +179,3 @@ void handle_interrupt_signal(__attribute__((unused))int signal_counter)
 	print_string("$ ");
 	print_character(BUFFER_FLUSH);
 }
-

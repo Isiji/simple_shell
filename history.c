@@ -143,14 +143,13 @@ int build_command_history(CommandData *data, char *buf, int linecount)
 int renumber_command_history(CommandData *data)
 {
 	StringList *node = data->history;
-	int i = 0;
+	int z = 0;
 
 	while (node)
 	{
-		node->number = i++;
+		node->number = z++;
 		node = node->next;
 	}
 
-	return (data->history_count = i);
+	return (data->history_count = z);
 }
-

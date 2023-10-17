@@ -60,13 +60,13 @@ void free_command_data(CommandData *data, int free_all)
 		if (!data->command_buffer)
 			free(data->arguments);
 		if (data->env)
-			free_list_node(&data->env);
+			free_list_node(&(data->env));
 		if (data->history)
 			free_list_node(&(data->history));
 		if (data->alias)
 			free_list_node(&(data->alias));
 		free_string_array(data->environ);
-		data->environ = NULL;
+			data->environ = NULL;
 		free_pointer((void **)data->command_buffer);
 		if (data->read_descriptor > 2)
 			close(data->read_descriptor);

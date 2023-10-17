@@ -10,7 +10,7 @@
  *
  * Return: Allocated list node
  */
-StringList *create_list_node(StringList **head_pointer, const char *string,
+StringList *create_list_node(StringList **head_pointer, const char *str,
 		int number)
 {
 	StringList *new_node;
@@ -24,7 +24,7 @@ StringList *create_list_node(StringList **head_pointer, const char *string,
 		return (NULL);
 
 	new_node->number = number;
-	new_node->str = duplicate_string(string);
+	new_node->str = duplicate_string(str);
 
 	if (!new_node->str)
 	{
@@ -48,7 +48,7 @@ StringList *create_list_node(StringList **head_pointer, const char *string,
  * Return: Allocated list node
  */
 StringList *create_list_node_at_end(StringList **head_pointer,
-		const char *string, int number)
+		const char *str, int number)
 {
 	StringList *new_node, *node;
 
@@ -61,13 +61,17 @@ StringList *create_list_node_at_end(StringList **head_pointer,
 	if (!new_node)
 		return (NULL);
 
+	fill_memory_with_character((void *)new_node, 0, sizeof(StringList));
 	new_node->number = number;
-	new_node->str = duplicate_string(string);
 
-	if (!new_node->str)
+	if (str)
 	{
-		free(new_node);
-		return (NULL);
+		new_node->str = duplicate_string(str);
+		if (!new_node->str)
+		{
+			free(new_node);
+			return (NULL);
+		}
 	}
 
 	if (node)

@@ -65,6 +65,7 @@ int find_builtin(CommandData *data)
 		{"cd", execute_cd},
 		{"help", execute_help},
 		{"history", execute_history},
+		{"alias", execute_alias},
 		{NULL, NULL}
 	};/*deal with alias*/
 
@@ -72,7 +73,7 @@ int find_builtin(CommandData *data)
 	{
 		if (compare_strings(data->argv[0], builtins[i].type) == 0)
 		{
-			data->linecount_flag++;
+			data->line_counter++;
 			builtin_return = builtins[i].function(data);
 			break;
 		}
@@ -107,7 +108,6 @@ void find_command(CommandData *data)
 			argument_count++;
 		}
 	}
-
 	if (!argument_count)
 	{
 		return;

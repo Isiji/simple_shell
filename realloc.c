@@ -1,14 +1,14 @@
 #include "blairs_simple_shell.h"
 
 /**
- * the_set_memory - fills memory with a constant byte
+ * fill_memory_with_character - fills memory with a constant byte
  * @ptr: the pointer to the memory area
  * @value: the byte to fill memory with
  * @num: the number of bytes to be filled
  *
  * Return: (ptr) a pointer to the memory area ptr
  */
-char *the_set_memory(char *ptr, char value, unsigned int num)
+char *fill_memory_with_character(char *ptr, char value, unsigned int num)
 {
 	unsigned int i;
 

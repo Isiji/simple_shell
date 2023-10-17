@@ -94,6 +94,7 @@ int print_integer_v2(int entry, int dt)
  *
  * Return: string
  */
+
 char *convert_integer_to_string(long int num, int base, int flags)
 {
 	static char *array;
@@ -108,12 +109,11 @@ char *convert_integer_to_string(long int num, int base, int flags)
 		sign = '-';
 
 	}
-	array = flags & CONVERT_TO_LOWERCASE ?
-		"0123456789abcdef" : "0123456789ABCDEF";
+	array = flags & CONVERT_TO_LOWERCASE ? "0123456789abcdef" : "0123456789ABCDEF";
 	ptr = &buffer[49];
 	*ptr = '\0';
 
-	do {
+	do	{
 		*--ptr = array[n % base];
 		n /= base;
 	} while (n != 0);
@@ -122,6 +122,7 @@ char *convert_integer_to_string(long int num, int base, int flags)
 		*--ptr = sign;
 	return (ptr);
 }
+
 
 /**
  * remove_comments_from_string - function replaces

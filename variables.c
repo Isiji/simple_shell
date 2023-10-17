@@ -93,9 +93,7 @@ int replace_command_alias(CommandData *data)
 		node = find_prefixed_node(data->alias, data->argv[0], '=');
 		if (!node)
 			return (0);
-
-		if (data->argv[0])
-			free(data->argv[0]);
+		free(data->argv[0]);
 
 		p = find_character_in_string(node->str, '=');
 
@@ -129,17 +127,17 @@ int replace_command_variables(CommandData *data)
 		if (data->argv[i][0] != '$' || !data->argv[i][1])
 			continue;
 
-		if (compare_strings(data->argv[i], "$?"))
+		if (!compare_strings(data->argv[i], "$?"))
 		{
 			replace_string(&(data->argv[i]),
-						   duplicate_string(convert_integer_to_string(data->status, 0, 0)));
+						   duplicate_string(convert_integer_to_string(data->status, 10, 0)));
 			continue;
 		}
 
-		if (compare_strings(data->argv[i], "$$"))
+		if (!compare_strings(data->argv[i], "$$"))
 		{
 			replace_string(&(data->argv[i]),
-						   duplicate_string(convert_integer_to_string(getpid(), 0, 0)));
+						   duplicate_string(convert_integer_to_string(getpid(), 10, 0)));
 			continue;
 		}
 

@@ -189,7 +189,7 @@ bool startsWith(const char *str, const char *prefix);
 /* Builtin Commands (Part 2) */
 int execute_history(CommandData *data);
 int remove_alias(CommandData *data, char *string);
-
+int execute_alias(CommandData *data);
 /* Custom getline Functions */
 ssize_t entry_buffer(CommandData *data, char **buffer, size_t *length);
 ssize_t read_input(CommandData *data);
@@ -223,8 +223,8 @@ int renumber_command_history(CommandData *data);
 
 /* Linked List Functions */
 StringList *create_list_node(StringList **head,
-		const char *string, int number);
-StringList *create_list_node_at_end(StringList **head, const char *string,
+		const char *str, int number);
+StringList *create_list_node_at_end(StringList **head, const char *str,
 		int number);
 size_t print_list_strings(const StringList *head);
 int delete_list_node(StringList **head_pointer, unsigned int index);

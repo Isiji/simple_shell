@@ -12,14 +12,14 @@
 char *copy_string_with_length(char *destination,
 		const char *source, int max_length)
 {
-	int i = 0;
+	int z = 0;
 
-	while (source[i] != '\0' && i < max_length - 1)
+	while (source[z] != '\0' && z < max_length - 1)
 	{
-		destination[i] = source[i];
-		i++;
+		destination[z] = source[z];
+		z++;
 	}
-	destination[i] = '\0';
+	destination[z] = '\0';
 	return (destination);
 }
 
@@ -36,21 +36,21 @@ char *copy_string_with_length(char *destination,
 char *concatenate_strings_with_length(char *destination,
 		char *source, int max_bytes)
 {
-	int i, j;
+	int t, p;
 	char *result = destination;
 
-	i = 0;
-	j = 0;
-	while (destination[i] != '\0')
-		i++;
-	while (source[j] != '\0' && j < max_bytes)
+	t = 0;
+	p = 0;
+	while (destination[t] != '\0')
+		t++;
+	while (source[p] != '\0' && p < max_bytes)
 	{
-		destination[i] = source[j];
-		i++;
-		j++;
+		destination[t] = source[p];
+		t++;
+		p++;
 	}
-	if (j < max_bytes)
-		destination[i] = '\0';
+	if (p < max_bytes)
+		destination[t] = '\0';
 	return (result);
 }
 
@@ -70,4 +70,3 @@ char *find_character_in_string(char *string, char character)
 
 	return (NULL);
 }
-

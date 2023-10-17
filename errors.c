@@ -8,14 +8,14 @@
  */
 void print_error_message(char *message)
 {
-	int i = 0;
+	int k = 0;
 
 	if (!message)
 		return;
-	while (message[i] != '\0')
+	while (message[k] != '\0')
 	{
-		print_error_character(message[i]);
-		i++;
+		print_error_character(message[k]);
+		k++;
 	}
 }
 
@@ -28,16 +28,16 @@ void print_error_message(char *message)
  */
 int print_error_character(char character)
 {
-	static int i;
+	static int k;
 	static char buf[WRITE_BUFFER_SIZE];
 
-	if (character == BUFFER_FLUSH || i >= WRITE_BUFFER_SIZE)
+	if (character == BUFFER_FLUSH || k >= WRITE_BUFFER_SIZE)
 	{
-		write(2, buf, i);
-		i = 0;
+		write(2, buf, k);
+		k = 0;
 	}
 	if (character != BUFFER_FLUSH)
-		buf[i++] = character;
+		buf[k++] = character;
 	return (1);
 }
 
@@ -51,16 +51,16 @@ int print_error_character(char character)
  */
 int print_integer(char character, int file_descriptor)
 {
-	static int i;
+	static int k;
 	static char buf[WRITE_BUFFER_SIZE];
 
-	if (character == BUFFER_FLUSH || i >= WRITE_BUFFER_SIZE)
+	if (character == BUFFER_FLUSH || k >= WRITE_BUFFER_SIZE)
 	{
-		write(file_descriptor, buf, i);
-		i = 0;
+		write(file_descriptor, buf, k);
+		k = 0;
 	}
 	if (character != BUFFER_FLUSH)
-		buf[i++] = character;
+		buf[k++] = character;
 	return (1);
 }
 
@@ -74,14 +74,13 @@ int print_integer(char character, int file_descriptor)
  */
 int print_string_descriptor(char *str, int file_descriptor)
 {
-	int i = 0;
+	int k = 0;
 
 	if (!str)
 		return (0);
 	while (*str)
 	{
-		i += print_integer(*str++, file_descriptor);
+		k += print_integer(*str++, file_descriptor);
 	}
-	return (i);
+	return (k);
 }
-

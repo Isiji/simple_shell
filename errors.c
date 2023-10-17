@@ -49,7 +49,7 @@ int print_error_character(char character)
  * Return: On success 1.
  * On error, -1 is returned, and errno is set appropriately.
  */
-int print_character_to_fd(char character, int file_descriptor)
+int print_integer(char character, int file_descriptor)
 {
 	static int i;
 	static char buf[WRITE_BUFFER_SIZE];
@@ -80,7 +80,7 @@ int print_string_descriptor(char *str, int file_descriptor)
 		return (0);
 	while (*str)
 	{
-		i += print_character_to_fd(*str++, file_descriptor);
+		i += print_integer(*str++, file_descriptor);
 	}
 	return (i);
 }

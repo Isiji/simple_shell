@@ -128,7 +128,7 @@ int shell_loop(CommandData *data, char **arguments);
 /* Error Handling Functions */
 void print_error_message(char *message);
 int print_error_character(char character);
-int print_integer(int number, int descriptor);
+int print_integer(char character, int descriptor);
 int print_string_descriptor(char *string, int descriptor);
 
 /* String Functions */

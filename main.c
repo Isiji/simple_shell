@@ -9,7 +9,7 @@
  */
 int main(int argc, char **argv)
 {
-	CommandData data = COMMAND_DATA_INIT;
+	CommandData data[] = { COMMAND_DATA_INIT };
 	int file_descriptor = 2;
 
 
@@ -29,7 +29,7 @@ if (argc == 2)
 		}
 		if (errno == ENOENT)
 		{
-			print_string(data.program_name);
+			print_string(argv[0]);
 			print_string(": 0: Can't open ");
 			print_string(argv[1]);
 			print_character('\n');
@@ -38,12 +38,12 @@ if (argc == 2)
 		}
 		return (EXIT_FAILURE);
 	}
-	data.read_descriptor = file_descriptor;
+	data->read_descriptor = file_descriptor;
 }
 
-pop_environment_list(&data);
-read_command_history(&data);
-shell_loop(&data, argv);
+pop_environment_list(data);
+read_command_history(data);
+shell_loop(data, argv);
 return (EXIT_SUCCESS);
 }
 

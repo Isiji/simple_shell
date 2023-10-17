@@ -22,14 +22,18 @@ StringList *create_list_node(StringList **head_pointer, const char *str,
 
 	if (!new_node)
 		return (NULL);
+	fill_memory_with_character((void *)new_node, 0, sizeof(StringList));
 
 	new_node->number = number;
-	new_node->str = duplicate_string(str);
 
-	if (!new_node->str)
+	if (str)
 	{
-		free(new_node);
-		return (NULL);
+		new_node->str = duplicate_string(str);
+		if (!new_node->str)
+		{
+			free(new_node);
+			return (NULL);
+		}
 	}
 
 	new_node->next = *head_pointer;

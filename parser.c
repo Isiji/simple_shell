@@ -17,7 +17,7 @@ int handle_command(CommandData *data, char *path)
 if (!path || stat(path, &s))
 	return (0);
 
-if (S_ISREG(s.st_mode))
+if (s.st_mode & S_IFREG)
 {
 	return (1);
 }

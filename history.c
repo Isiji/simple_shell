@@ -39,7 +39,7 @@ int write_command_history(CommandData *data)
 {
 	ssize_t file_desc;
 	char *filename = get_history_file(data);
-	StringList *node = data->history;
+	StringList *node = NULL;
 
 	if (!filename)
 		return (-1);
@@ -50,15 +50,12 @@ int write_command_history(CommandData *data)
 	if (file_desc == -1)
 		return (-1);
 
-	while (node)
+	for (node = data->history; node; node = node->next)
 	{
 		print_string_descriptor(node->str, file_desc);
-		print_string_descriptor("\n", file_desc);
-		node = node->next;
+		print_integer('\n', file_desc);
 	}
-
-	fflush(stdout);
-
+	print_integer(BUFFER_FLUSH, file_desc);
 	close(file_desc);
 
 	return (1);
@@ -77,41 +74,41 @@ int read_command_history(CommandData *data)
 	struct stat st;
 	char *buffer = NULL, *filename = get_history_file(data);
 
-if (!filename)
-	return (0);
-file_desc = open(filename, O_RDONLY);
-free(filename);
-if (file_desc == -1)
-	return (0);
-if (!fstat(file_desc, &st))
-	file_size = st.st_size;
-if (file_size < 2)
-	return (0);
-buffer = malloc(sizeof(char) * (file_size + 1));
-if (!buffer)
-	return (0);
-read_len = read(file_desc, buffer, file_size);
-buffer[file_size] = 0;
-if (read_len <= 0)
-	return (free(buffer), 0);
-close(file_desc);
-for (i = 0; i < file_size; i++)
-{
-	if (buffer[i] == '\n')
+	if (!filename)
+		return (0);
+	file_desc = open(filename, O_RDONLY);
+	free(filename);
+	if (file_desc == -1)
+		return (0);
+	if (!fstat(file_desc, &st))
+		file_size = st.st_size;
+	if (file_size < 2)
+		return (0);
+	buffer = malloc(sizeof(char) * (file_size + 1));
+	if (!buffer)
+		return (0);
+	read_len = read(file_desc, buffer, file_size);
+	buffer[file_size] = 0;
+	if (read_len <= 0)
+		return (free(buffer), 0);
+	close(file_desc);
+	for (i = 0; i < file_size; i++)
 	{
-		buffer[i] = 0;
-		build_command_history(data, buffer + last, linecount++);
-		last = i + 1;
+		if (buffer[i] == '\n')
+		{
+			buffer[i] = 0;
+			build_command_history(data, buffer + last, linecount++);
+			last = i + 1;
+		}
 	}
-}
-if (last != i)
-	build_command_history(data, buffer + last, linecount++);
-free(buffer);
-data->history_count = linecount;
-while (data->history_count-- >= MAX_HISTORY_ENTRIES)
-	delete_list_node(&(data->history), 0);
-renumber_command_history(data);
-return (data->history_count);
+	if (last != i)
+		build_command_history(data, buffer + last, linecount++);
+	free(buffer);
+	data->history_count = linecount;
+	while (data->history_count-- >= MAX_HISTORY_ENTRIES)
+		delete_list_node(&(data->history), 0);
+	renumber_command_history(data);
+	return (data->history_count);
 }
 
 /**

@@ -12,32 +12,15 @@
 char *copy_string_with_length(char *destination,
 		const char *source, int max_length)
 {
-int i, j;
-max_length = string_length(source);
+	int i = 0;
 
-if (destination == NULL)
-{
-destination = (char *)malloc(max_length + 1);
-
-}
-
-i = 0;
-while (source[i] != '\0' && i < max_length - 1)
-{
-	destination[i] = source[i];
-	i++;
-}
-if (i < max_length)
-{
-	j = i;
-	while (j < max_length)
+	while (source[i] != '\0' && i < max_length - 1)
 	{
-		destination[j] = '\0';
-		j++;
+		destination[i] = source[i];
+		i++;
 	}
 	destination[i] = '\0';
-}
-return (destination);
+	return (destination);
 }
 
 

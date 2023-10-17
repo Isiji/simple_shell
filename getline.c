@@ -13,7 +13,7 @@ ssize_t entry_buffer(CommandData *data, char **buf, size_t *len)
 	ssize_t r = 0;
 	size_t len_p = 0;
 
-	if (!*len) /* if nothing left in the buffer, fill it */
+	if (!*len)
 	{
 		free(*buf);
 		*buf = NULL;
@@ -27,14 +27,14 @@ ssize_t entry_buffer(CommandData *data, char **buf, size_t *len)
 		{
 			if ((*buf)[r - 1] == '\n')
 			{
-				(*buf)[r - 1] = '\0'; /* remove trailing newline */
+				(*buf)[r - 1] = '\0';
 				r--;
 			}
 			data->linecount_flag = 1;
 			remove_comments_from_string(*buf);
 			build_command_history(data, *buf, data->history_count++);
 			/* if (_strchr(*buf, ';')) is this a command chain? */
-			if (find_character_in_string(*buf, ';'))
+			/*if (find_character_in_string(*buf, ';'))*/
 			{
 				*len = r;
 				data->command_buffer = buf;

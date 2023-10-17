@@ -8,24 +8,12 @@
  */
 char **get_custom_environment(CommandData *data)
 {
-	char **env_strings;
 
 	if (!data->env || data->environment_changed)
 	{
-		env_strings = get_list_strings(data->env);
-		if (env_strings)
-		{
-			free_string_array(data->environ);
-
-			data->environ = env_strings;
-			data->environment_changed = 0;
-		}
-		else
-		{
-			return (NULL);
-		}
+		data->environ = get_list_strings(data->env);
+		data->environment_changed = 0;
 	}
-
 	return (data->environ);
 }
 
@@ -51,7 +39,9 @@ int unset_custom_environment_variable(CommandData *data, char *variable)
 		if (prefix && *prefix == '=')
 		{
 			data->environment_changed = delete_list_node(&(data->env), index);
-			return (data->environment_changed);
+			index = 0;
+			node = data->env;
+			continue;
 		}
 		node = node->next;
 		index++;
@@ -76,15 +66,15 @@ int set_custom_environment_variable(CommandData *data,
 	char *buffer = NULL;
 
 	if (!variable || !value)
-		return (1);
+		return (0);
 
 	buffer = malloc(string_length(variable) + string_length(value) + 2);
 	if (!buffer)
 		return (1);
 
-	copy_string_with_length(buffer, variable, INT_MAX);
-	concatenate_strings_with_length(buffer, "=", INT_MAX);
-	concatenate_strings_with_length(buffer, value, INT_MAX);
+	copy_string(buffer, variable);
+	concatenate_strings(buffer, "=");
+	concatenate_strings(buffer, value);
 
 	node = data->env;
 	while (node)
@@ -93,9 +83,8 @@ int set_custom_environment_variable(CommandData *data,
 		if (prefix && *prefix == '=')
 		{
 			free(node->str);
-			node->str = duplicate_string(buffer);
+			node->str = buffer;
 			data->environment_changed = 1;
-			free(buffer);
 			return (0);
 		}
 		node = node->next;

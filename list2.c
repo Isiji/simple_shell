@@ -29,7 +29,7 @@ char **get_list_strings(StringList *h)
 {
 	StringList *node = h;
 	size_t size = list_length(h);
-	size_t i, j;
+	size_t j;
 	char **strings;
 	char *str;
 
@@ -40,21 +40,21 @@ char **get_list_strings(StringList *h)
 	if (!strings)
 		return (NULL);
 
-	for (i = 0; node; node = node->next, i++)
-	{
-		str = duplicate_string(node->str);
+	for (size = 0; node; node = node->next, size++)
+	{ 
+		str = malloc(string_length(node->str) + 1);
 		if (!str)
 		{
-			for (j = 0; j < i; j++)
+			for (j = 0; j < size; j++)
 				free(strings[j]);
 			free(strings);
 			return (NULL);
 		}
-
-		strings[i] = str;
+		str = copy_string(str, node->str);
+		strings[size] = str;
 	}
 
-	strings[i] = NULL;
+	strings[size] = NULL;
 	return (strings);
 }
 
@@ -92,7 +92,7 @@ size_t print_linked_list(const StringList *h)
  */
 StringList *find_prefixed_node(StringList *node, char *prefix, char needle)
 {
-	const char *ptr = NULL;
+	char *ptr = NULL;
 
 	while (node)
 	{
